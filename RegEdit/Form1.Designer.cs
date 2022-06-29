@@ -277,7 +277,7 @@
             this.MaximumSize = new System.Drawing.Size(550, 372);
             this.MinimumSize = new System.Drawing.Size(550, 372);
             this.Name = "Form1";
-            this.Text = "注册表测试";
+            this.Text = "注册表修改";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
