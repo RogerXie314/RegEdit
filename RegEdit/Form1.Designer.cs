@@ -70,7 +70,7 @@
             this.groupBox1.Size = new System.Drawing.Size(501, 150);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "单项测试";
+            this.groupBox1.Text = "单项操作";
             // 
             // groupBox3
             // 
@@ -207,7 +207,7 @@
             this.groupBox2.Size = new System.Drawing.Size(501, 151);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "压力测试(键值)";
+            this.groupBox2.Text = "循环操作(键值)";
             // 
             // textBox5
             // 
@@ -277,7 +277,7 @@
             this.MaximumSize = new System.Drawing.Size(550, 372);
             this.MinimumSize = new System.Drawing.Size(550, 372);
             this.Name = "Form1";
-            this.Text = "注册表测试(IEG)";
+            this.Text = "注册表测试";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
