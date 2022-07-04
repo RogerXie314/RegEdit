@@ -289,13 +289,7 @@ namespace RegEdit
             }
 
         }
-        /*
-        private void label3_MouseDown(object sender, MouseEventArgs e)
-        {
-            label3.Visible = false;
-            textBox1.Focus();
-        }
-        */
+        
         private void textBox1_MouseDown(object sender, MouseEventArgs e)
         {if (textBox1.ForeColor == Color.Gray)
             {
