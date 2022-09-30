@@ -129,7 +129,7 @@ namespace RegEdit
             RegistryKey key_Root = GetRegDomain(comboBox1.Text);
             string initial_subkey = textBox1.Text;
             string subkey = initial_subkey.Replace(@"\",@"\\");
-            ///MessageBox.Show(subkey);
+            
             RegistryHelper rh = new RegistryHelper();
             if (IsKeyOrValue())
             {
@@ -187,9 +187,7 @@ namespace RegEdit
             else
             {
                 int a = subkey.LastIndexOf("\\");                
-                string first_subkey= subkey.Substring(0, a - 1);
-                //int b = first_subkey.LastIndexOf("\\");
-                //string second_subkey = subkey.Substring(0, b - 1);
+                string first_subkey= subkey.Substring(0, a - 1);            
                 string subkey_value = subkey.Substring(a+1);
                 rh.RenameKeyValueName(key_Root, first_subkey, subkey_value, subkey_value+1);
                 MessageBox.Show(first_subkey + "的键值"+subkey_value+"已被重命名成功！");
