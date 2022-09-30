@@ -133,8 +133,19 @@ namespace RegEdit
             RegistryHelper rh = new RegistryHelper();
             if (IsKeyOrValue())
             {
+                try
+                {
+                    rh.SetRegistryData(key_Root, subkey);
+                }
+                catch (Exception)
+                { return; }
+                finally
+                {
+                    IDisposable disposable = rh as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
                 
-                rh.SetRegistryData(key_Root, subkey);
             }
             //如果为值，则最后一个\\后面的内容为键值，值为“testing done!”
             else
@@ -142,8 +153,19 @@ namespace RegEdit
                 int a = subkey.LastIndexOf("\\");
                 string real_subkey = subkey.Substring(0, a-1);
                 string realsubkey_value = subkey.Substring(a+1);
-                rh.SetRegistryValue(key_Root,real_subkey,realsubkey_value,"testing done!");
-                MessageBox.Show(real_subkey);
+                try
+                {
+                    rh.SetRegistryValue(key_Root, real_subkey, realsubkey_value, "testing done!");
+                    MessageBox.Show(real_subkey);
+                }
+                catch (Exception)
+                { return; }
+                finally
+                {
+                    IDisposable disposable = rh as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
 
             }
             
@@ -159,7 +181,16 @@ namespace RegEdit
             if (IsKeyOrValue())
             {
                 ///如果为key，则删除键。
-                rh.DeleteRegist(key_Root, subkey);
+                try
+                { rh.DeleteRegist(key_Root, subkey); }
+                catch (Exception)
+                { return; }
+                finally
+                {
+                    IDisposable disposable = rh as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
             }
             else
             {
@@ -182,16 +213,35 @@ namespace RegEdit
             RegistryHelper rh = new RegistryHelper();
             if (IsKeyOrValue())
             {
-                rh.RenameRegist(key_Root, subkey);
+                try
+                { rh.RenameRegist(key_Root, subkey); }
+                catch (Exception)
+                { return; }
+                finally
+                {
+                    IDisposable disposable = rh as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
             }
             else
             {
                 int a = subkey.LastIndexOf("\\");                
                 string first_subkey= subkey.Substring(0, a - 1);            
                 string subkey_value = subkey.Substring(a+1);
-                rh.RenameKeyValueName(key_Root, first_subkey, subkey_value, subkey_value+1);
-                MessageBox.Show(first_subkey + "的键值"+subkey_value+"已被重命名成功！");
-
+                try
+                {
+                    rh.RenameKeyValueName(key_Root, first_subkey, subkey_value, subkey_value + 1);
+                    MessageBox.Show(first_subkey + "的键值" + subkey_value + "已被重命名成功！");
+                }
+                catch (Exception)
+                { return; }
+                finally
+                {
+                    IDisposable disposable = rh as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
             }
               
         }
@@ -218,22 +268,30 @@ namespace RegEdit
                 {
                     try
                     {
-                        Task t1 = Task.Run(()=> {
+                        Task t1 = Task.Run(() =>
+                        {
                             button2.Enabled = false;
                             for (int i = 1; i <= Convert.ToInt32(RegNum); i++)
                             {
                                 RegistryKey aimdir = key_Root.CreateSubKey(subkey);
                                 try
                                 {
-                                    aimdir.SetValue("test"+i,"Creation KeyValue done!");
+                                    aimdir.SetValue("test" + i, "Creation KeyValue done!");
                                 }
                                 catch (Exception) { return; }
+                                finally
+                                {
+                                    IDisposable disposable = aimdir as IDisposable;
+                                    if (disposable != null)
+                                        disposable.Dispose();
+                                }
                             }
                         });
                         t1.ContinueWith(m => { MessageBox.Show("创建完成!"); button2.Enabled = true; });
                     }
                     catch
-                    { }
+                    { return; }
+                    
                 }
             }
         }
@@ -271,15 +329,21 @@ namespace RegEdit
                     {
                         try
                         {
-                            Task t1 = new Task(() => { dh.DeleteKeyValue(key_Root,subkey2, num_stress); });
+                            Task t1 = new Task(() => { dh.DeleteKeyValue(key_Root, subkey2, num_stress); });
                             t1.Start();
-                            Task t2 = new Task(()=> {dh.CreateKeyValue(key_Root,subkey1,Convert.ToInt32(Quantity),num_stress);});
+                            Task t2 = new Task(() => { dh.CreateKeyValue(key_Root, subkey1, Convert.ToInt32(Quantity), num_stress); });
                             t2.Start();
-                            button1.Enabled = false;button1.Text = "执行中...";
+                            button1.Enabled = false; button1.Text = "执行中...";
                             await Task.Delay(num_stress);
                         }
                         catch (Exception)
                         { continue; }
+                        finally
+                        {
+                            IDisposable disposable = dh as IDisposable;
+                            if (disposable != null)
+                                disposable.Dispose();
+                        }
                     }
                 }
                 else
